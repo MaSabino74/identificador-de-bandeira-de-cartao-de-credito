@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="My-logo-MS.ico" type="image/x-icon">
+    <title>Identificador de Bandeira de Cartão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+            background-image: url(Fundo-cartoes.png);
+            background-size: cover;
+            background-repeat: no-repeat
+            
+        }
+
+        input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            background-color: #e0e0e0;
+        }
+        button:hover {
+            background-color: lightgray;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Identificar Bandeira do Cartão</h1>
+
+    <input type="text" id="numeroCartao" placeholder="Digite o número do cartão">
+    <br><br>
+    <button onclick="identificarBandeira()">Identificar</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        function identificarBandeira() {
+            const numero = document.getElementById("numeroCartao").value.replace(/\D/g, '');
+            const resultado = document.getElementById("resultado");
+
+            let bandeira = "Bandeira não identificada";
+
+            if (/^4[0-9]{12}(?:[0-9]{3})?$/.test(numero)) {
+                bandeira = "Visa";
+            } else if (/^5[1-5][0-9]{14}$/.test(numero)) {
+                bandeira = "MasterCard";
+            } else if (/^3[47][0-9]{13}$/.test(numero)) {
+                bandeira = "American Express";
+            } else if (/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/.test(numero)) {
+                bandeira = "Diners Club";
+            } else if (/^6(?:011|5[0-9]{2})[0-9]{12}$/.test(numero)) {
+                bandeira = "Discover";
+            } else if (/^(?:2131|1800|35\d{3})\d{11}$/.test(numero)) {
+                bandeira = "JCB";
+            } else if (/^50[0-9]{14,17}$/.test(numero)) {
+                bandeira = "Aura";
+            } else if (/^636368|^438935|^504175|^451416|^636297/.test(numero)) {
+                bandeira = "Elo";
+            } else if (/^627780/.test(numero)) {
+                bandeira = "Hipercard";
+            } else if (/^606282/.test(numero)) {
+                bandeira = "Hiper";
+            }
+
+            resultado.innerHTML = `💳 <strong>${bandeira}</strong>`;
+        }
+    </script>
+
+</body>
+
+</html>
